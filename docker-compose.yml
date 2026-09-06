@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./nyaya-api
+      dockerfile: Dockerfile
+    container_name: nyaya-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=Nyaya AI - Commercial Courts Research Engine
+      - VERSION=0.1.0
+      - API_V1_STR=/api/v1
+      - SECRET_KEY=${SECRET_KEY:-nyaya_chambers_secret_key_production_2026}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=gemini-3.6-flash
+      - DATABASE_URL=sqlite:////app/data/nyaya.db
+      - CORS_ORIGINS=["http://localhost","http://localhost:80","http://localhost:5173","http://127.0.0.1"]
+    volumes:
+      - nyaya-db-data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./nyaya-web
+      dockerfile: Dockerfile
+    container_name: nyaya-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  nyaya-db-data:
