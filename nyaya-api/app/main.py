@@ -35,11 +35,13 @@ app = FastAPI(
 # CORS configuration for Chambers Frontend Client
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else ["*"],
+    allow_origins=["*"],
+    allow_origin_regex=r"https://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Exception handlers
 app.add_exception_handler(AppException, app_exception_handler)

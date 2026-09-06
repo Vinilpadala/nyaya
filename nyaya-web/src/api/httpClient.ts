@@ -69,13 +69,23 @@ export async function requestApi<T>(
       headers,
     });
   } catch (netErr: any) {
-    throw new ApiError(
-      `Unable to reach Nyaya AI Chambers Backend (API offline at ${API_BASE_URL || 'http://127.0.0.1:8000'}).`,
-      0,
-      'NETWORK_ERROR',
-      netErr.message
-    );
+    // Retry once in case Render free tier instance is waking up from cold start
+    try {
+      await new Promise((res) => setTimeout(res, 2500));
+      response = await fetch(url, {
+        ...options,
+        headers,
+      });
+    } catch (secondErr: any) {
+      throw new ApiError(
+        `Unable to reach Nyaya AI Chambers Backend (API offline at ${API_BASE_URL || 'http://127.0.0.1:8000'}). If Render server is starting up, please wait 15 seconds and try again.`,
+        0,
+        'NETWORK_ERROR',
+        secondErr.message
+      );
+    }
   }
+
 
 
   let json: any = null;
