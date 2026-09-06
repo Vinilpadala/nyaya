@@ -1,0 +1,6 @@
+.env
+.env.*
+*.pyc
+__pycache__/
+nyaya.db
+.pytest_cache/

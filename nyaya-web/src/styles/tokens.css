@@ -1,0 +1,71 @@
+:root {
+  /* Institutional Palette - Indian Judicial Standard */
+  --gov-navy-900: #08172c;
+  --gov-navy-800: #0c2340;
+  --gov-navy-700: #13335c;
+  --gov-navy-600: #1a4478;
+  --gov-navy-50: #f0f5fa;
+
+  --gov-saffron-800: #92400e;
+  --gov-saffron-700: #b45309;
+  --gov-saffron-600: #d97706;
+  --gov-saffron-50: #fffbeb;
+
+  --gov-green-700: #15803d;
+  --gov-green-50: #f0fdf4;
+  --gov-red-700: #b91c1c;
+  --gov-red-50: #fef2f2;
+
+  --gov-slate-900: #0f172a;
+  --gov-slate-800: #1e293b;
+  --gov-slate-700: #334155;
+  --gov-slate-600: #475569;
+  --gov-slate-500: #64748b;
+  --gov-slate-400: #94a3b8;
+  --gov-slate-300: #cbd5e1;
+  --gov-slate-200: #e2e8f0;
+  --gov-slate-100: #f1f5f9;
+  --gov-slate-50: #f8fafc;
+
+  /* Parchment & Judgment Paper Tone */
+  --gov-paper: #ffffff;
+  --gov-paper-subtle: #fbfbfb;
+  --gov-paper-warm: #fcfbf8;
+  --gov-paper-border: #e2e8f0;
+
+  /* Typography scale */
+  --font-scale: 1;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Merriweather', Georgia, "Times New Roman", serif;
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Strict Institutional Dimensions */
+  --header-height: 70px;
+  --subnav-height: 48px;
+  --border-radius-sm: 3px;
+  --border-radius-md: 4px;
+  --border-radius-lg: 6px;
+
+  /* Shadows - Minimal & Flat */
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-popover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Demo Data Visual Standard */
+  --demo-badge-bg: #fef3c7;
+  --demo-badge-text: #92400e;
+  --demo-badge-border: #fcd34d;
+}
+
+[data-font-size="small"] {
+  --font-scale: 0.9;
+}
+
+[data-font-size="large"] {
+  --font-scale: 1.1;
+}
+
+[data-font-size="extra-large"] {
+  --font-scale: 1.2;
+}
