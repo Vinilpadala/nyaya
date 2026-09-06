@@ -3,6 +3,36 @@ import { Scale, Lock, UserCheck, AlertCircle, X, Shield } from 'lucide-react';
 import { useChambers } from '../../context/ChambersContext';
 import { fetchDemoUsersApi, DemoUserDTO } from '../../api/authClient';
 
+const FALLBACK_DEMO_ACCOUNTS: DemoUserDTO[] = [
+  {
+    email: 'justice.sharma@commercialcourt.gov.in',
+    password: 'Chambers@2026',
+    full_name: "Hon'ble Justice A. K. Sharma — DEMO ACCOUNT",
+    role: 'JUDGE',
+    court_division: 'Commercial Appellate Division, High Court of Delhi',
+    chambers_number: 'Courtroom 14 / Chambers 402',
+    description: 'Presiding Commercial Division Judge (SIH Demo Account)',
+  },
+  {
+    email: 'clerk.verma@commercialcourt.gov.in',
+    password: 'Chambers@2026',
+    full_name: 'R. K. Verma, Law Clerk (DEMO ACCOUNT)',
+    role: 'RESEARCH_CLERK',
+    court_division: 'Commercial Appellate Division, High Court of Delhi',
+    chambers_number: 'Chambers 402 Library Desk',
+    description: 'Judicial Research Assistant authorized to prepare case dossiers (SIH Demo Account)',
+  },
+  {
+    email: 'registrar.commercial@delhihighcourt.nic.in',
+    password: 'Chambers@2026',
+    full_name: 'P. N. Gupta, Registrar (DEMO ACCOUNT)',
+    role: 'REGISTRAR',
+    court_division: 'Commercial Registry & Case Management',
+    chambers_number: 'Registry Wing Room 108',
+    description: 'Court Registry Administrator supervising commercial dockets (SIH Demo Account)',
+  },
+];
+
 interface ChambersLoginModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,7 +44,7 @@ export const ChambersLoginModal: React.FC<ChambersLoginModalProps> = ({ isOpen, 
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [demoAccounts, setDemoAccounts] = useState<DemoUserDTO[]>([]);
+  const [demoAccounts, setDemoAccounts] = useState<DemoUserDTO[]>(FALLBACK_DEMO_ACCOUNTS);
 
   useEffect(() => {
     if (isOpen) {
@@ -26,6 +56,7 @@ export const ChambersLoginModal: React.FC<ChambersLoginModalProps> = ({ isOpen, 
       });
     }
   }, [isOpen]);
+
 
   if (!isOpen) return null;
 

@@ -3,14 +3,44 @@ import { Scale, Lock, Shield, AlertCircle, ChevronDown, ChevronUp, UserCheck } f
 import { useChambers } from '../../context/ChambersContext';
 import { fetchDemoUsersApi, DemoUserDTO } from '../../api/authClient';
 
+const FALLBACK_DEMO_ACCOUNTS: DemoUserDTO[] = [
+  {
+    email: 'justice.sharma@commercialcourt.gov.in',
+    password: 'Chambers@2026',
+    full_name: "Hon'ble Justice A. K. Sharma — DEMO ACCOUNT",
+    role: 'JUDGE',
+    court_division: 'Commercial Appellate Division, High Court of Delhi',
+    chambers_number: 'Courtroom 14 / Chambers 402',
+    description: 'Presiding Commercial Division Judge (SIH Demo Account)',
+  },
+  {
+    email: 'clerk.verma@commercialcourt.gov.in',
+    password: 'Chambers@2026',
+    full_name: 'R. K. Verma, Law Clerk (DEMO ACCOUNT)',
+    role: 'RESEARCH_CLERK',
+    court_division: 'Commercial Appellate Division, High Court of Delhi',
+    chambers_number: 'Chambers 402 Library Desk',
+    description: 'Judicial Research Assistant authorized to prepare case dossiers (SIH Demo Account)',
+  },
+  {
+    email: 'registrar.commercial@delhihighcourt.nic.in',
+    password: 'Chambers@2026',
+    full_name: 'P. N. Gupta, Registrar (DEMO ACCOUNT)',
+    role: 'REGISTRAR',
+    court_division: 'Commercial Registry & Case Management',
+    chambers_number: 'Registry Wing Room 108',
+    description: 'Court Registry Administrator supervising commercial dockets (SIH Demo Account)',
+  },
+];
+
 export const ChambersAuthScreen: React.FC = () => {
   const { login } = useChambers();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [demoAccounts, setDemoAccounts] = useState<DemoUserDTO[]>([]);
-  const [showDemoCredentials, setShowDemoCredentials] = useState(false);
+  const [demoAccounts, setDemoAccounts] = useState<DemoUserDTO[]>(FALLBACK_DEMO_ACCOUNTS);
+  const [showDemoCredentials, setShowDemoCredentials] = useState(true);
 
   useEffect(() => {
     fetchDemoUsersApi().then((users) => {
@@ -19,6 +49,7 @@ export const ChambersAuthScreen: React.FC = () => {
       }
     });
   }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
