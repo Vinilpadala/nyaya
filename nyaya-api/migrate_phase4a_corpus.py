@@ -6,21 +6,29 @@ from datetime import date
 # Ensure app is on path
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
+from app.core.config import settings
 from app.db.session import SessionLocal, engine
 from app.db.base import Base
 from app.models.case import Case, CasePassage, Citation
 from app.db.corpus_validator import validate_corpus
 
 
-def migrate_and_seed_phase4a():
+def migrate_and_seed_phase4a(db: SessionLocal = None):
     print("=================================================================")
     print("NYAYA AI — PHASE 4A: CORPUS SCHEMA MIGRATION & SEEDING")
     print("=================================================================")
 
     # 1. Ensure SQLite schema has new columns
-    db_file = os.path.join(os.path.dirname(__file__), "nyaya.db")
-    if os.path.exists(db_file):
-        conn = sqlite3.connect(db_file)
+    db_file = None
+    if settings.DATABASE_URL.startswith("sqlite:////"):
+        db_file = settings.DATABASE_URL.replace("sqlite:////", "/")
+    elif settings.DATABASE_URL.startswith("sqlite:///"):
+        db_file = settings.DATABASE_URL.replace("sqlite:///", "")
+        if not os.path.isabs(db_file):
+            db_file = os.path.join(os.path.dirname(__file__), db_file)
+
+    if db_file and os.path.exists(db_file):
+        conn = sqlite3.connect(db_file, timeout=30.0)
         cursor = conn.cursor()
 
         # Check and add columns to cases
@@ -47,7 +55,11 @@ def migrate_and_seed_phase4a():
         conn.close()
 
     # 2. Open SQLAlchemy session to update existing records and seed new authorities
-    db = SessionLocal()
+    created_session = False
+    if db is None:
+        db = SessionLocal()
+        created_session = True
+
     try:
         # Update existing cases with explicit jurisdiction and provenance
         existing_cases = db.query(Case).all()
@@ -449,7 +461,9 @@ def migrate_and_seed_phase4a():
         return val_res
 
     finally:
-        db.close()
+        if created_session:
+            db.close()
+
 
 
 if __name__ == "__main__":

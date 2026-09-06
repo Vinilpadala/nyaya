@@ -27,9 +27,11 @@ def init_db():
         seed_passages(db)
         # 3c. Seed Authentic Case Citations & Treatments
         seed_citations(db)
+        db.commit()
         # 3d. Seed Expanded Phase 4A Precedents & Passages
         from migrate_phase4a_corpus import migrate_and_seed_phase4a
-        migrate_and_seed_phase4a()
+        migrate_and_seed_phase4a(db=db)
+
         # 4. Seed Saved Research Bookmarks
         seed_saved_research(db)
         # 5. Seed Foundational Bench Dossiers
