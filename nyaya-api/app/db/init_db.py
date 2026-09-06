@@ -76,6 +76,7 @@ def seed_users(db: Session):
     existing_judge = db.query(User).filter(User.email == "justice.sharma@commercialcourt.gov.in").first()
     if not existing_judge:
         judge = User(
+            id="11111111-1111-4111-a111-111111111111",
             email="justice.sharma@commercialcourt.gov.in",
             hashed_password=hash_password("Chambers@2026"),
             full_name="Hon'ble Justice A. K. Sharma — DEMO ACCOUNT",
@@ -84,6 +85,7 @@ def seed_users(db: Session):
             chambers_number="Courtroom 14 / Chambers 402",
         )
         clerk = User(
+            id="22222222-2222-4222-a222-222222222222",
             email="clerk.verma@commercialcourt.gov.in",
             hashed_password=hash_password("Chambers@2026"),
             full_name="R. K. Verma, Law Clerk (DEMO ACCOUNT)",
@@ -92,6 +94,7 @@ def seed_users(db: Session):
             chambers_number="Chambers 402 Library Desk",
         )
         registrar = User(
+            id="33333333-3333-4333-a333-333333333333",
             email="registrar.commercial@delhihighcourt.nic.in",
             hashed_password=hash_password("Chambers@2026"),
             full_name="P. N. Gupta, Registrar (DEMO ACCOUNT)",
@@ -100,6 +103,7 @@ def seed_users(db: Session):
             chambers_number="Registry Wing Room 108",
         )
         db.add_all([judge, clerk, registrar])
+
     else:
         # Update existing user display names if needed
         existing_judge.full_name = "Hon'ble Justice A. K. Sharma — DEMO ACCOUNT"

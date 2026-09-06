@@ -26,7 +26,13 @@ def get_current_user(
     
     user = db.query(User).filter(User.id == user_id, User.is_active == True).first()
     if not user:
+        user_email = payload.get("email")
+        if user_email:
+            user = db.query(User).filter(User.email == user_email, User.is_active == True).first()
+
+    if not user:
         raise UnauthorizedException("User account not found or deactivated")
+
     
     return user
 

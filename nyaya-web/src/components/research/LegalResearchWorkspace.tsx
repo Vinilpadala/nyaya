@@ -140,8 +140,10 @@ export const LegalResearchWorkspace: React.FC = () => {
   const {
     selectedDossier,
     addDossierNote,
+    logout,
     addAuditLog,
     setSelectedCase,
+
     cases,
     setActiveTab,
     currentLanguage,
@@ -209,8 +211,13 @@ export const LegalResearchWorkspace: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Error executing legal research query:', err);
-      setQueryError(err.message || 'Error executing legal research query against backend.');
-    } finally {
+      if (err?.status === 401 || err?.message?.includes('User account not found') || err?.message?.includes('deactivated')) {
+        logout();
+      } else {
+        setQueryError(err.message || 'Error executing legal research query against backend.');
+      }
+    }
+ finally {
       setIsSearching(false);
     }
   };
