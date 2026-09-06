@@ -38,6 +38,8 @@ export function clearAuthToken(): void {
   }
 }
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 export async function requestApi<T>(
   endpoint: string,
   options: RequestInit = {},
@@ -55,20 +57,23 @@ export async function requestApi<T>(
     throw new ApiError('Authentication credentials missing. Please sign in to Chambers.', 401, 'UNAUTHORIZED');
   }
 
+  const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
+
   let response: Response;
   try {
-    response = await fetch(endpoint, {
+    response = await fetch(url, {
       ...options,
       headers,
     });
   } catch (netErr: any) {
     throw new ApiError(
-      'Unable to reach Nyaya AI Chambers Backend (API offline at http://127.0.0.1:8000).',
+      `Unable to reach Nyaya AI Chambers Backend (API offline at ${API_BASE_URL || 'http://127.0.0.1:8000'}).`,
       0,
       'NETWORK_ERROR',
       netErr.message
     );
   }
+
 
   let json: any = null;
   const text = await response.text();
