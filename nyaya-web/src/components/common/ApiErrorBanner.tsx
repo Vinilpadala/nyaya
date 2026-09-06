@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { API_BASE_URL } from '../../api/httpClient';
 
 interface ApiErrorBannerProps {
   message: string;
@@ -32,10 +33,11 @@ export const ApiErrorBanner: React.FC<ApiErrorBannerProps> = ({
           <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#9f1239' }}>{title}</div>
           <div style={{ fontSize: '0.775rem', color: '#be123c', marginTop: '2px' }}>{message}</div>
           <div style={{ fontSize: '0.7rem', color: '#881337', marginTop: '4px', opacity: 0.85 }}>
-            Ensure the FastAPI backend is running at <code>http://127.0.0.1:8000</code>.
+            Ensure the FastAPI backend is running at <code>{API_BASE_URL || 'http://127.0.0.1:8000'}</code>.
           </div>
         </div>
       </div>
+
 
       {onRetry && (
         <button
